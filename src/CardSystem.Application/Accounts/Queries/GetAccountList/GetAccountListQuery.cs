@@ -12,6 +12,7 @@ namespace CardSystem.Application.Accounts.Queries.GetAccountList
 {
     public class GetAccountListQuery : IRequest<IEnumerable<Account>>
     {
+        public int Flag { get; set; }
         public class GetAccountListQueryHandler : IRequestHandler<GetAccountListQuery, IEnumerable<Account>>
         {
             private readonly ICardSystemDbContext _context;
@@ -23,10 +24,23 @@ namespace CardSystem.Application.Accounts.Queries.GetAccountList
 
             public async Task<IEnumerable<Account>> Handle(GetAccountListQuery request, CancellationToken cancellationToken)
             {
-                var users = _context.Accounts
+                if (request.Flag==1)
+                {
+                    var clientCards = _context.ClientCards
                                     .AsEnumerable();
 
-                return await Task.FromResult(users);
+                    var users = _context.Accounts
+                                    .Where(r => !clientCards.Select(x => x.AccountId).Contains(r.Id));
+
+                    return await Task.FromResult(users);
+                }
+                else
+                {
+                    var users = _context.Accounts
+                                    .AsEnumerable();
+
+                    return await Task.FromResult(users);
+                }
 
             }
         }

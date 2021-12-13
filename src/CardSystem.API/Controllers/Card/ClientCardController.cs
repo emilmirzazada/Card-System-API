@@ -19,7 +19,6 @@ namespace CardSystem.API.Controllers.Card
         [ProducesDefaultResponseType]
         public async Task<IActionResult> Create(CreateClientCardCommand command)
         {
-            command.ClientId = User.GetUserId();
             return Ok(await Mediator.Send(command));
         }
 

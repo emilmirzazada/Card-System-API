@@ -29,9 +29,9 @@ namespace CardSystem.API.Controllers.Account
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public async Task<IActionResult> Get(int userId)
+        public async Task<IActionResult> Get(int flag)
         {
-            var accounts = await Mediator.Send(new GetAccountListQuery());
+            var accounts = await Mediator.Send(new GetAccountListQuery { Flag=flag});
             return Ok(accounts);
         }
     }

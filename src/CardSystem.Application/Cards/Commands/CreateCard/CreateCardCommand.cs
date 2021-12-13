@@ -21,9 +21,6 @@ namespace CardSystem.Application.Cards.Commands.CreateCard
 
         public string CVV { get; set; }
         public bool Valid { get; set; }
-        [EnumDataType(typeof(CardState))]
-        [JsonConverter(typeof(StringEnumConverter))]
-        public CardState State { get; set; }
         [EnumDataType(typeof(CardType))]
         [JsonConverter(typeof(StringEnumConverter))]
         public CardType Type { get; set; }

@@ -24,10 +24,10 @@ namespace CardSystem.API.Controllers.Card
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet()]
+        public async Task<IActionResult> GetAllCards(string flag)
         {
-            var clientCards = await Mediator.Send(new GetCardListQuery());
+            var clientCards = await Mediator.Send(new GetCardListQuery {Flag=flag });
             return Ok(clientCards);
         }
 
